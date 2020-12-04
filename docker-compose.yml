@@ -29,8 +29,12 @@ services:
       EMQX_NAME: ioticos-gl
       EMQX_HOST: 127.0.0.1
 
+      TZ: "America/Argentina/Cordoba"
 
-      
+      # DEFAULT DASH PASS
+      EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "emqxdashpass"
+
+    
       EMQX_LISTENER__TCP__EXTERNAL__MAX_CONNECTIONS: 1000
 
 
