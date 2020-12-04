@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+
+  emqx:
+    container_name: emqx
+    image: emqx/emqx:4.2.3
+    restart: always
+    ports:
+      - ${emqxdashport}:18083
+      - 8083:8083
+    environment: 
+      #listener.tcp.external.max_connections
+      EMQX_LISTENER__TCP__EXTERNAL__MAX_CONNECTIONS: 1000
+
+
+      
+
+
+
+
+
+       
+
+
+      
+
+   
+    
+
+
+
+   
+
+
+
+
+
+
+    
+
+
+
