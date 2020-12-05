@@ -51,6 +51,8 @@ services:
       # DEFAULT DASH PASS
       EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "emqxdashpass"
 
+      EMQX_ALLOW_ANONYMOUS: "false"
+
       # MONGO CONNECTION
       EMQX_AUTH__MONGO__TYPE: single
       EMQX_AUTH__MONGO__TOPOLOGY__POOL_SIZE: 1
@@ -74,6 +76,7 @@ services:
       EMQX_AUTH__MONGO__AUTH_QUERY__PASSWORD_HASH: plain
       EMQX_AUTH__MONGO__AUTH_QUERY__PASSWORD_FIELD: "password"
       EMQX_AUTH__MONGO__AUTH_QUERY__SELECTOR: "username=%u"
+
 
 
 
