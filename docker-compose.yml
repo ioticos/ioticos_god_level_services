@@ -8,8 +8,21 @@ volumes:
   vol-emqx-log:
     name: foo-emqx-log
 
-
 services:
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.4
+    restart: always
+    environment:
+      TZ: "America/Argentina/Buenos_Aires"
+      MONGO_INITDB_ROOT_USERNAME: "devuser"
+      MONGO_INITDB_ROOT_PASSWORD: "devpassword"
+    volumes:
+      - ./mongodata:/data/db
+    ports:
+      - 27017:27017
+
 
   emqx:
     container_name: emqx
@@ -34,7 +47,6 @@ services:
       # DEFAULT DASH PASS
       EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "emqxdashpass"
 
-    
       EMQX_LISTENER__TCP__EXTERNAL__MAX_CONNECTIONS: 1000
 
 
