@@ -31,7 +31,12 @@ services:
     restart: always
     ports:
       - 18083:18083
+      - 18084:18084
+      - 1883:1883
+      - 8883:8883
       - 8083:8083
+      - 8084:8084
+      - 8085:8081
 
    # volumes:
    #   - vol-emqx-data:/opt/emqx/data
@@ -52,6 +57,7 @@ services:
       EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "emqxdashpass"
 
       EMQX_ALLOW_ANONYMOUS: "false"
+      EMQX_NOMATCH: "deny"
 
       # MONGO CONNECTION
       EMQX_AUTH__MONGO__TYPE: single
@@ -77,6 +83,13 @@ services:
       EMQX_AUTH__MONGO__AUTH_QUERY__PASSWORD_FIELD: "password"
       EMQX_AUTH__MONGO__AUTH_QUERY__SELECTOR: "username=%u"
 
+      ## Enable ACL query.
+      #Access control list
+      EMQX_AUTH__MONGO__ACL_QUERY: "on"
+      EMQX_AUTH__MONGO__ACL_QUERY__COLLECTION: "emqxauthrules"
+      EMQX_AUTH__MONGO__ACL_QUERY__SELECTOR: "username=%u"
+
+      EMQX_LOADED_PLUGINS: "emqx_recon,emqx_retainer,emqx_management,emqx_dashboard, emqx_auth_mongo"
 
 
 
