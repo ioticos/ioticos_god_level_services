@@ -24,6 +24,7 @@ services:
       - 27017:27017
 
 
+    
 
   emqx:
     container_name: emqx
@@ -43,8 +44,13 @@ services:
    #   - vol-emqx-etc:/opt/emqx/etc
    #   - vol-emqx-log:/opt/emqx/log
    # 
+
     links:
       - mongo
+
+    extra_hosts: 
+      - "localhost:192.168.0.6"
+
 
     environment: 
       
@@ -55,6 +61,9 @@ services:
 
       # DEFAULT DASH PASS
       EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "emqxdashpass"
+
+      # DEFAULT APP SECRET
+      EMQX_MANAGEMENT__DEFAULT_APPLICATION__SECRET: "emqxsecret"
 
       EMQX_ALLOW_ANONYMOUS: "false"
       EMQX_NOMATCH: "deny"
@@ -89,8 +98,7 @@ services:
       EMQX_AUTH__MONGO__ACL_QUERY__COLLECTION: "emqxauthrules"
       EMQX_AUTH__MONGO__ACL_QUERY__SELECTOR: "username=%u"
 
-      EMQX_LOADED_PLUGINS: "emqx_recon,emqx_retainer,emqx_management,emqx_dashboard, emqx_auth_mongo"
-
+      EMQX_LOADED_PLUGINS: "emqx_recon,emqx_retainer,emqx_management,emqx_dashboard,emqx_auth_mongo"
 
 
       EMQX_LISTENER__TCP__EXTERNAL__MAX_CONNECTIONS: 1000
