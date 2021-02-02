@@ -1,12 +1,12 @@
 version: "3.8"
 #
-#volumes:
-#  vol-emqx-data:
-#    name: foo-emqx-data
+volumes:
+  vol-emqx-data:
+    name: foo-emqx-data
 #  vol-emqx-etc:
 #    name: foo-emqx-etc
-#  vol-emqx-log:
-#    name: foo-emqx-log
+  vol-emqx-log:
+    name: foo-emqx-log
 #
 services:
   mongo:
@@ -14,13 +14,13 @@ services:
     image: mongo:4.4
     restart: always
     environment:
-      TZ: "America/Argentina/Buenos_Aires"
-      MONGO_INITDB_ROOT_USERNAME: "devuser"
-      MONGO_INITDB_ROOT_PASSWORD: "devpassword"
+      TZ: "${TZ}"
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"
     volumes:
       - ./mongodata:/data/db
     ports:
-      - 27017:27017
+      - ${MONGO_EXT_PORT}:27017
 
   emqx:
     container_name: emqx
@@ -28,17 +28,15 @@ services:
     restart: always
     ports:
       - 18083:18083
-      - 18084:18084
       - 1883:1883
       - 8883:8883
       - 8083:8083
-      - 8084:8084
       - 8085:8081
 
-    # volumes:
-    #   - vol-emqx-data:/opt/emqx/data
+    volumes:
+      - vol-emqx-data:/opt/emqx/data
     #   - vol-emqx-etc:/opt/emqx/etc
-    #   - vol-emqx-log:/opt/emqx/log
+      - vol-emqx-log:/opt/emqx/log
     #
 
     links:
@@ -51,13 +49,13 @@ services:
       EMQX_NAME: ioticos-gl
       EMQX_HOST: 127.0.0.1
 
-      TZ: "America/Argentina/Cordoba"
+      TZ: "${TZ}"
 
       # DEFAULT DASH PASS
-      EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "emqxdashpass"
+      EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "${EMQX_DEFAULT_USER_PASSWORD}"
 
       # DEFAULT APP SECRET
-      EMQX_MANAGEMENT__DEFAULT_APPLICATION__SECRET: "emqxsecret"
+      EMQX_MANAGEMENT__DEFAULT_APPLICATION__SECRET: "${EMQX_DEFAULT_APPLICATION_SECRET}"
 
       EMQX_ALLOW_ANONYMOUS: "false"
       EMQX_NOMATCH: "deny"
@@ -67,11 +65,11 @@ services:
       EMQX_AUTH__MONGO__TOPOLOGY__POOL_SIZE: 1
       EMQX_AUTH__MONGO__TOPOLOGY__MAX_OVERFLOW: 0
 
-      EMQX_AUTH__MONGO__SERVER: "mongo:27017"
+      EMQX_AUTH__MONGO__SERVER: "mongo:${MONGO_EXT_PORT}"
       EMQX_AUTH__MONGO__POOL: 8
 
-      EMQX_AUTH__MONGO__LOGIN: "devuser"
-      EMQX_AUTH__MONGO__PASSWORD: "devpassword"
+      EMQX_AUTH__MONGO__LOGIN: "${MONGO_USERNAME}"
+      EMQX_AUTH__MONGO__PASSWORD: "${MONGO_PASSWORD}"
       EMQX_AUTH__MONGO__AUTH_SOURCE: admin
 
       EMQX_AUTH__MONGO__DATABASE: "ioticos_god_level"
