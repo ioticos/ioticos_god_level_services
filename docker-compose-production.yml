@@ -1,10 +1,4 @@
 version: "3.3"
-volumes:
-  - vol-emqx-data
-#  vol-emqx-etc:
-#    name: foo-emqx-etc
-  - vol-emqx-log
-
 
 services:
 
