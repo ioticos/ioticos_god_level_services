@@ -1,2 +1,4 @@
 mongodata
+.ENV
 .env
+.log
