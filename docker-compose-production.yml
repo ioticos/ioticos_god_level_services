@@ -24,7 +24,7 @@ services:
       - "3001:3001"
       - "80:3002"
 
-    link:
+    links:
       - emqx
       - mongo
 
