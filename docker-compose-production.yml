@@ -11,6 +11,25 @@ volumes:
 
 
 services:
+
+  node:
+    container_name: node
+    image: "node:14"
+    restart: always
+    working_dir: /home/node/app
+    volumes:
+      - ./mycode/index.js:/home/node/app/index.js
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "80:3002"
+
+    link:
+      - emqx
+      - mongo
+      
+    command: sh -c "node index.js"
+
   mongo:
     container_name: mongo
     image: mongo:4.4
@@ -96,3 +115,4 @@ services:
       EMQX_LOADED_PLUGINS: "emqx_recon,emqx_retainer,emqx_management,emqx_dashboard,emqx_auth_mongo"
 
       EMQX_LISTENER__TCP__EXTERNAL__MAX_CONNECTIONS: 1000
+
