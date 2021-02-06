@@ -8,7 +8,7 @@ volumes:
   vol-emqx-log:
     name: foo-emqx-log
 #
-
+ fd
 
 services:
 
@@ -27,7 +27,7 @@ services:
     link:
       - emqx
       - mongo
-      
+
     command: sh -c "node index.js"
 
   mongo:
