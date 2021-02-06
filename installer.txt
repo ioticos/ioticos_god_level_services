@@ -1,0 +1,21 @@
+sudo apt-get update
+mkdir iotgl
+cd iotgl
+wget https://get.docker.com/
+mv index.html install_docker.sh
+sudo chmod 777 install_docker.sh
+sudo ./install_docker.sh
+rm install_docker.sh
+git clone https://github.com/ioticos/ioticos_god_level_services.git
+cd ioticos_god_level_services/
+rm docker-compose.yml
+sudo apt  install docker-compose -y
+
+WARNING!!!!! GENERATE ENV VARS
+
+
+
+
+Adding a user to the "docker" group will grant the ability to run
+         containers which can be used to obtain root privileges on the
+         docker host.
