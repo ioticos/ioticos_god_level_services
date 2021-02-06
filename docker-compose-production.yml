@@ -2,9 +2,11 @@ version: "3.3"
 #
 volumes:
   vol-emqx-data:
+    name: "emqx_data"
 #  vol-emqx-etc:
 #    name: foo-emqx-etc
   vol-emqx-log:
+    name: "emqx_log"
 
 #
 
@@ -57,7 +59,6 @@ services:
       - vol-emqx-data:/opt/emqx/data
     #   - vol-emqx-etc:/opt/emqx/etc
       - vol-emqx-log:/opt/emqx/log
-      -             :/app/index.js
     #
 
     links:
