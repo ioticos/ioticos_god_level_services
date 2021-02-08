@@ -1,4 +1,11 @@
-version: "3.3"
+version: "3.8"
+
+volumes:
+  vol-emqx-data:
+    name: foo-emqx-data
+  vol-emqx-log:
+    name: foo-emqx-log
+
 
 services:
 
@@ -47,6 +54,8 @@ services:
     volumes:
       - vol-emqx-data:/opt/emqx/data
       - vol-emqx-log:/opt/emqx/log
+
+    
 
     links:
       - mongo
