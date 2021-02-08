@@ -14,10 +14,8 @@ cd ioticos
 
 
 sudo git clone https://github.com/ioticos/ioticos_god_level_app.git
-sudo mv ioticos_god_level_app app
+sudo mv ioticos_god_level_app  app
 
-
-sudo docker-compose -f docker-compose-production.yml up
 
 
 
