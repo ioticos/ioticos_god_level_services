@@ -45,6 +45,8 @@ services:
     container_name: emqx
     image: emqx/emqx:4.2.3
     restart: always
+    expose:
+      - "8085"
     ports:
       - 18083:18083
       - 1883:1883
@@ -55,8 +57,7 @@ services:
       - vol-emqx-data:/opt/emqx/data
       - vol-emqx-log:/opt/emqx/log
 
-    
-
+  
     links:
       - mongo
 

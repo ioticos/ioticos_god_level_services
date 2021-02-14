@@ -298,17 +298,20 @@ sudo sh -c "echo 'MONGO_DATABASE=ioticos_god_level' >> $filename"
 sudo sh -c "echo '' >> $filename"
 sudo sh -c "echo '# F R O N T' >> $filename"
 sudo sh -c "echo 'APP_PORT=3000' >> $filename"
-sudo sh -c "echo '${SSL}${DOMAIN}:3001/api' >> $filename"
+sudo sh -c "echo 'AXIOS_BASE_URL=${SSL}${DOMAIN}:3001/api' >> $filename"
 sudo sh -c "echo 'MQTT_PORT=8083' >> $filename"
 sudo sh -c "echo 'EMQX_RESOURCES_DELAY=30000' >> $filename"
+sudo sh -c " echo 'EMQX_NODE_SUPERUSER_USER=${EMQX_NODE_SUPERUSER_USER}' >> $filename"
+sudo sh -c " echo 'EMQX_NODE_SUPERUSER_PASSWORD=${EMQX_NODE_SUPERUSER_PASSWORD}' >> $filename"
+sudo sh -c " echo 'EMQX_NODE_HOST=${EMQX_NODE_HOST}' >> $filename"
+sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}' >> $filename"
 sudo sh -c " echo 'SSLREDIRECT=${SSLREDIRECT}' >> $filename"
+
 
 cd ..
 
 sudo docker-compose -f docker_node_install.yml up
 sudo docker-compose -f docker-compose-production.yml up
-
-
 
 
 
