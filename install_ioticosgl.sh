@@ -203,13 +203,17 @@ done
 
 SSL=$REPLY
 WSPREFIX=""
+SSLREDIRECT=""
+
 if [[ $SSL -eq 1 ]]
   then
     SSL="https://"
     WSPREFIX="ws://"
+    SSLREDIRECT="true"
   else
     SSL="http://"
     WSPREFIX="wss://"
+    SSLREDIRECT="false"
 fi
 
 msg="
@@ -241,48 +245,6 @@ read -p "Presiona Enter para comenzar la instalación..."
 sleep 2
 
 
-## ______________________________
-## INSALL INIT
-filename='.appenv'
-
-
-
-echo "environment=prod" >> $filename
-echo "" >> $filename
-echo "API_PORT:3001" >> $filename
-echo "" >> $filename
-echo "# M O N G O" >> $filename
-echo "MONGO_USERNAME=${MONGO_USERNAME}" >> $filename
-echo "MONGO_PASSWORD=${MONGO_PASSWORD}" >> $filename
-echo "MONGO_HOST=mongo" >> $filename
-echo "MONGO_PORT=${MONGO_PORT}" >> $filename
-echo "MONGO_DATABASE=ioticos_god_level" >> $filename 
-echo "" >> $filename
-echo "# F R O N T" >> $filename
-echo "APP_PORT=3000" >> $filename
-echo "${SSL}${DOMAIN}:3001/api" >> $filename
-echo "MQTT_PORT=8083" >> $filename
-echo "EMQX_RESOURCES_DELAY=30000" >> $filename
-
-
-filename='.servicesenv'
-
-#SERVICES .ENV
-echo "environment=prod" >> $filename
-echo "" >> $filename
-echo "# TIMEZONE (all containers)." >> $filename
-echo "TZ=${TZ}" >> $filename
-echo "" >> $filename
-echo "# M O N G O" >> $filename
-echo "MONGO_USERNAME=${MONGO_USERNAME}" >> $filename
-echo "MONGO_PASSWORD=${MONGO_PASSWORD}" >> $filename
-echo "MONGO_EXT_PORT=${MONGO_PORT}" >> $filename
-echo "" >> $filename
-echo "# E M Q X" >> $filename
-echo "EMQX_DEFAULT_USER_PASSWORD=${EMQX_DEFAULT_USER_PASSWORD}" >> $filename
-echo "EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}" >> $filename
-
-
 sudo apt-get update
 wget https://get.docker.com/
 sudo mv index.html install_docker.sh
@@ -297,13 +259,54 @@ sudo mv ioticos_god_level_services ioticos
 
 cd ioticos
 
+## ______________________________
+## INSALL INIT
+filename='.env'
+
+
+#SERVICES .ENV
+sudo sh -c " echo 'environment=prod' >> $filename"
+sudo sh -c " echo '' >> $filename"
+sudo sh -c " echo '# TIMEZONE (all containers).' >> $filename"
+sudo sh -c " echo 'TZ=${TZ}' >> $filename"
+sudo sh -c " echo '' >> $filename"
+sudo sh -c " echo '# M O N G O' >> $filename"
+sudo sh -c " echo 'MONGO_USERNAME=${MONGO_USERNAME}' >> $filename"
+sudo sh -c " echo 'MONGO_PASSWORD=${MONGO_PASSWORD}' >> $filename"
+sudo sh -c " echo 'MONGO_EXT_PORT=${MONGO_PORT}' >> $filename"
+sudo sh -c " echo '' >> $filename"
+sudo sh -c " echo '# E M Q X' >> $filename"
+sudo sh -c " echo 'EMQX_DEFAULT_USER_PASSWORD=${EMQX_DEFAULT_USER_PASSWORD}' >> $filename"
+sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}' >> $filename"
+
+
 sudo git clone https://github.com/ioticos/ioticos_god_level_app.git
 sudo mv ioticos_god_level_app  app
-sudo docker-compose -f docker_node_install.yml up -d
+
+cd app
+
+sudo sh -c "echo 'environment=prod' >> $filename"
+sudo sh -c "echo '' >> $filename"
+sudo sh -c "echo 'API_PORT:3001' >> $filename"
+sudo sh -c "echo '' >> $filename"
+sudo sh -c "echo '# M O N G O' >> $filename"
+sudo sh -c "echo 'MONGO_USERNAME=${MONGO_USERNAME}' >> $filename"
+sudo sh -c "echo 'MONGO_PASSWORD=${MONGO_PASSWORD}' >> $filename"
+sudo sh -c "echo 'MONGO_HOST=mongo' >> $filename"
+sudo sh -c "echo 'MONGO_PORT=${MONGO_PORT}' >> $filename"
+sudo sh -c "echo 'MONGO_DATABASE=ioticos_god_level' >> $filename"
+sudo sh -c "echo '' >> $filename"
+sudo sh -c "echo '# F R O N T' >> $filename"
+sudo sh -c "echo 'APP_PORT=3000' >> $filename"
+sudo sh -c "echo '${SSL}${DOMAIN}:3001/api' >> $filename"
+sudo sh -c "echo 'MQTT_PORT=8083' >> $filename"
+sudo sh -c "echo 'EMQX_RESOURCES_DELAY=30000' >> $filename"
+sudo sh -c " echo 'SSLREDIRECT=${SSLREDIRECT}' >> $filename"
 
 cd ..
 
-sudo docker-compose -f docker-compose-production.yml  up -d
+sudo docker-compose -f docker_node_install.yml up
+sudo docker-compose -f docker-compose-production.yml up
 
 
 

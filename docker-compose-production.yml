@@ -25,7 +25,7 @@ services:
       - emqx
       - mongo
 
-    command: sh -c "npm run build && npm run start"
+    command: sh -c "echo 'delaying 60 seconds' && sleep 60 && npm run build && npm run start"
     #command: sh -c "npm install"
 
   mongo:
