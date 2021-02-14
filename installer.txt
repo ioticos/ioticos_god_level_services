@@ -1,3 +1,6 @@
+ANOTACIONES PARA LUEGO GENERAR BASH SCRIPT
+
+
 sudo apt-get update
 wget https://get.docker.com/
 sudo mv index.html install_docker.sh
@@ -16,6 +19,10 @@ cd ioticos
 sudo git clone https://github.com/ioticos/ioticos_god_level_app.git
 sudo mv ioticos_god_level_app  app
 
+// WARNING .ENV
+
+sudo docker-compose -f docker_node_install.yml up -d
+sudo docker-compose -f docker-compose-production.yml  up -d
 
 
 
@@ -24,5 +31,56 @@ sudo mv ioticos_god_level_app  app
 
 
 
+>>>>SERVICES .ENV
 
-sudo usermod -aG docker ubuntu
+environment=dev
+
+# TIMEZONE (all containers).
+TZ=UTC
+
+# MONGO CREDENTIALS
+MONGO_USERNAME=devuser
+MONGO_PASSWORD=devpassword
+MONGO_EXT_PORT=27017
+
+# EMQX
+EMQX_DEFAULT_USER_PASSWORD=emqxdashpass
+EMQX_DEFAULT_APPLICATION_SECRET=emqxsecret
+
+
+
+
+------------
+
+>>>>>>> APP .env
+
+#A P I
+API_PORT=3001
+
+MONGO_USERNAME=devuser
+MONGO_PASSWORD=devpassword
+MONGO_HOST=mongo
+MONGO_PORT=27017
+MONGO_DATABASE=ioticos_god_level
+
+#emqx
+EMQX_DEFAULT_APPLICATION_SECRET=emqxsecret
+EMQX_NODE_SUPERUSER_USER=superuser
+EMQX_NODE_SUPERUSER_PASSWORD=superuser
+EMQX_NODE_HOST=54.94.41.193
+EMQX_API_TOKEN=121212
+
+
+# F R O N T
+APP_PORT=3000
+AXIOS_BASE_URL=http://54.94.41.193:3001/api
+
+MQTT_PREFIX=ws://
+MQTT_HOST=54.94.41.193
+MQTT_PORT=8083
+
+
+EMQX_RESOURCES_DELAY=30000
+
+
+//sudo usermod -aG docker ubuntu
