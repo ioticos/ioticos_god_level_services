@@ -25,13 +25,15 @@ services:
       - emqx
       - mongo
 
-    command: sh -c "echo 'delaying 60 seconds' && sleep 60 && npm run build && npm run start"
+    command: sh -c "echo 'delaying 60 seconds' && sleep 60 && npm run start"
     #command: sh -c "npm install"
 
   mongo:
     container_name: mongo
     image: mongo:4.4
     restart: always
+    logging:
+      driver: "none"
     environment:
       TZ: "${TZ}"
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_USERNAME}"
@@ -45,8 +47,7 @@ services:
     container_name: emqx
     image: emqx/emqx:4.2.3
     restart: always
-    expose:
-      - "8085"
+
     ports:
       - 18083:18083
       - 1883:1883

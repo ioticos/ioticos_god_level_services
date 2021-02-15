@@ -43,7 +43,7 @@ printf "No te preocupes al final del cuestionario, verás un resumen antes de co
 
 
 read -p "Presiona enter para continuar..."
-sleep 0
+
 
 
 
@@ -93,8 +93,7 @@ done
 ## ______________________________
 ## EMQX
 
-#MQTT NODE HOST
-EMQX_NODE_HOST="emqx"
+
 
 #Dashboard Password
 random_str=$(rand-str 20)
@@ -175,6 +174,18 @@ done
 
 
 
+#IP 
+printf "\n\n🌐 Ingresa la ip pública del VPS. \n"
+
+while [[ -z "$IP" ]]
+do
+  read -p "   IP: "  IP
+  echo "         Selected IP ► ${IP} ✅"
+done
+
+
+
+
 #SSL?
 printf "\n\n🔐 El sistema está pensado para que un balanceador de cargas gestione los certificados SSL. \n"
 printf "   Si la plataforma estará bajo SSL utilizando balanceador de cargas o proporcionando certificados, selecciona 'Con SSL'. \n"
@@ -238,6 +249,7 @@ printf "   🟢 MQTT SUPERUSER: $(tput setaf 128)${EMQX_NODE_SUPERUSER_USER}$(tp
 printf "   🟢 MQTT SUPER PASS: $(tput setaf 128)${EMQX_NODE_SUPERUSER_PASSWORD}$(tput setaf 7)\n"
 printf "   🟢 EMQX API WEB TOKEN: $(tput setaf 128)${EMQX_API_TOKEN}$(tput setaf 7)\n"
 printf "   🟢 DOMAIN: $(tput setaf 128)${DOMAIN}$(tput setaf 7)\n"
+printf "   🟢 IP: $(tput setaf 128)${IP}$(tput setaf 7)\n"
 printf "   🟢 SSL?: $(tput setaf 128)${opt}$(tput setaf 7)\n"
 
 printf "\n\n\n\n";
@@ -287,8 +299,15 @@ cd app
 
 sudo sh -c "echo 'environment=prod' >> $filename"
 sudo sh -c "echo '' >> $filename"
-sudo sh -c "echo 'API_PORT:3001' >> $filename"
+
+#A P I  - N O D E 
+sudo sh -c "echo '#A P I  - N O D E ' >> $filename"
+sudo sh -c "echo 'API_PORT=3001' >> $filename"
+sudo sh -c "echo 'WEBHOOKS_HOST=node' >> $filename"
+sudo sh -c "echo 'MQTT_NOTIFICATION_HOST=${IP}' >> $filename"
 sudo sh -c "echo '' >> $filename"
+
+# M O N G O 
 sudo sh -c "echo '# M O N G O' >> $filename"
 sudo sh -c "echo 'MONGO_USERNAME=${MONGO_USERNAME}' >> $filename"
 sudo sh -c "echo 'MONGO_PASSWORD=${MONGO_PASSWORD}' >> $filename"
@@ -296,21 +315,29 @@ sudo sh -c "echo 'MONGO_HOST=mongo' >> $filename"
 sudo sh -c "echo 'MONGO_PORT=${MONGO_PORT}' >> $filename"
 sudo sh -c "echo 'MONGO_DATABASE=ioticos_god_level' >> $filename"
 sudo sh -c "echo '' >> $filename"
+
+
+# E M Q X
+sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}' >> $filename"
+sudo sh -c " echo 'EMQX_NODE_SUPERUSER_USER=${EMQX_NODE_SUPERUSER_USER}' >> $filename"
+sudo sh -c " echo 'EMQX_NODE_SUPERUSER_PASSWORD=${EMQX_NODE_SUPERUSER_PASSWORD}' >> $filename"
+sudo sh -c " echo 'EMQX_API_HOST=${IP}' >> $filename"
+sudo sh -c "echo 'EMQX_RESOURCES_DELAY=30000' >> $filename"
+sudo sh -c "echo '' >> $filename"
+
+# F R O N T
 sudo sh -c "echo '# F R O N T' >> $filename"
 sudo sh -c "echo 'APP_PORT=3000' >> $filename"
 sudo sh -c "echo 'AXIOS_BASE_URL=${SSL}${DOMAIN}:3001/api' >> $filename"
 sudo sh -c "echo 'MQTT_PORT=8083' >> $filename"
-sudo sh -c "echo 'EMQX_RESOURCES_DELAY=30000' >> $filename"
-sudo sh -c " echo 'EMQX_NODE_SUPERUSER_USER=${EMQX_NODE_SUPERUSER_USER}' >> $filename"
-sudo sh -c " echo 'EMQX_NODE_SUPERUSER_PASSWORD=${EMQX_NODE_SUPERUSER_PASSWORD}' >> $filename"
-sudo sh -c " echo 'EMQX_NODE_HOST=${EMQX_NODE_HOST}' >> $filename"
-sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}' >> $filename"
+
 sudo sh -c " echo 'SSLREDIRECT=${SSLREDIRECT}' >> $filename"
 
 
 cd ..
 
 sudo docker-compose -f docker_node_install.yml up
+sudo docker-compose -f docker_nuxt_build.yml up
 sudo docker-compose -f docker-compose-production.yml up
 
 

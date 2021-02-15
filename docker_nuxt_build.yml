@@ -11,4 +11,4 @@ services:
       - ./app/:/home/node/app
 
 
-    command: sh -c "npm install"
+    command: sh -c "npm run build"
