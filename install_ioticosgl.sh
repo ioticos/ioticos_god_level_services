@@ -107,7 +107,7 @@ done
 
 
 
-#API Password
+#EMQX API Password
 random_str=$(rand-str 20)
 printf "\n\n🔐 Necesitamos crear una clave para la API de EMQX \n"
 while [[ -z "$EMQX_DEFAULT_APPLICATION_SECRET" ]]
@@ -148,11 +148,11 @@ done
 random_str=$(rand-str 20)
 printf "\n\n🔐 Necesitamos crear el token que enviará los requests desde EMQX a nuestros Webhooks \n"
 
-while [[ -z "$EMQX_API_TOKEN" ]]
+while [[ -z "$WEBHOOK_TOKEN" ]]
 do
-  read -p "   EMQX API WEBHOOK TOKEN $(tput setaf 128) (${random_str})$(tput setaf 7): "  EMQX_API_TOKEN
-  EMQX_API_TOKEN=${EMQX_API_TOKEN:-${random_str}}
-  echo "      Selected EMQX API WEB TOKEN  ► ${EMQX_API_TOKEN} ✅"
+  read -p "   EMQX API WEBHOOK TOKEN $(tput setaf 128) (${random_str})$(tput setaf 7): "  WEBHOOK_TOKEN
+  WEBHOOK_TOKEN=${WEBHOOK_TOKEN:-${random_str}}
+  echo "      Selected EMQX API WEB TOKEN  ► ${WEBHOOK_TOKEN} ✅"
 done
 
 
@@ -249,7 +249,7 @@ printf "   🟢 MONGO PORT: $(tput setaf 128)${MONGO_PORT}$(tput setaf 7)\n"
 printf "   🟢 EMQX API PASSWORD: $(tput setaf 128)${EMQX_DEFAULT_APPLICATION_SECRET}$(tput setaf 7)\n"
 printf "   🟢 MQTT SUPERUSER: $(tput setaf 128)${EMQX_NODE_SUPERUSER_USER}$(tput setaf 7)\n"
 printf "   🟢 MQTT SUPER PASS: $(tput setaf 128)${EMQX_NODE_SUPERUSER_PASSWORD}$(tput setaf 7)\n"
-printf "   🟢 EMQX API WEB TOKEN: $(tput setaf 128)${EMQX_API_TOKEN}$(tput setaf 7)\n"
+printf "   🟢 WEBHOOK WEB TOKEN: $(tput setaf 128)${WEBHOOK_TOKEN}$(tput setaf 7)\n"
 printf "   🟢 DOMAIN: $(tput setaf 128)${DOMAIN}$(tput setaf 7)\n"
 printf "   🟢 IP: $(tput setaf 128)${IP}$(tput setaf 7)\n"
 printf "   🟢 SSL?: $(tput setaf 128)${opt}$(tput setaf 7)\n"
@@ -324,6 +324,7 @@ sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SE
 sudo sh -c " echo 'EMQX_NODE_SUPERUSER_USER=${EMQX_NODE_SUPERUSER_USER}' >> $filename"
 sudo sh -c " echo 'EMQX_NODE_SUPERUSER_PASSWORD=${EMQX_NODE_SUPERUSER_PASSWORD}' >> $filename"
 sudo sh -c " echo 'EMQX_API_HOST=${IP}' >> $filename"
+sudo sh -c " echo 'WEBHOOK_TOKEN=${WEBHOOK_TOKEN}' >> $filename"
 sudo sh -c "echo 'EMQX_RESOURCES_DELAY=30000' >> $filename"
 sudo sh -c "echo '' >> $filename"
 
