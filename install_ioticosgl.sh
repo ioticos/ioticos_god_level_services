@@ -319,6 +319,7 @@ sudo sh -c "echo 'MONGO_DATABASE=ioticos_god_level' >> $filename"
 sudo sh -c "echo '' >> $filename"
 
 
+
 # E M Q X
 sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}' >> $filename"
 sudo sh -c " echo 'EMQX_NODE_SUPERUSER_USER=${EMQX_NODE_SUPERUSER_USER}' >> $filename"
