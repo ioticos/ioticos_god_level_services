@@ -221,10 +221,12 @@ if [[ $SSL -eq 1 ]]
     SSL="https://"
     WSPREFIX="wss://"
     MQTT_HOST=$DOMAIN
+    MQTT_PORT="8084"
     SSLREDIRECT="true"
   else
     SSL="http://"
     WSPREFIX="ws://"
+    MQTT_PORT="8083"
     MQTT_HOST=$IP
     SSLREDIRECT="false"
 fi
@@ -334,7 +336,7 @@ sudo sh -c "echo '# F R O N T' >> $filename"
 sudo sh -c "echo 'APP_PORT=3000' >> $filename"
 sudo sh -c "echo 'AXIOS_BASE_URL=${SSL}${DOMAIN}:3001/api' >> $filename"
 
-sudo sh -c "echo 'MQTT_PORT=8083' >> $filename"
+sudo sh -c "echo 'MQTT_PORT=${MQTT_PORT}' >> $filename"
 sudo sh -c "echo 'MQTT_HOST=${DOMAIN}' >> $filename"
 sudo sh -c "echo 'MQTT_PREFIX=${WSPREFIX}' >> $filename"
 
@@ -346,7 +348,7 @@ cd ..
 
 sudo docker-compose -f docker_node_install.yml up
 sudo docker-compose -f docker_nuxt_build.yml up
-sudo docker-compose -f docker-compose-production.yml up -d
+sudo docker-compose -f docker_compose_production.yml up -d
 
 
 

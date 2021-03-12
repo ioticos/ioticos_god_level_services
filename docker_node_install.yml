@@ -3,8 +3,8 @@ version: "3.8"
 
 services:
 
-  node:
-    container_name: node
+  node_install:
+    container_name: node_install
     image: "node:14"
     working_dir: /home/node/app
     volumes:
