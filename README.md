@@ -16,7 +16,7 @@ El mismo fue desarrollado en el curso IoT Bootcamp God Level.
 
 ![IOTICOS%20GL%20APP%203aecd292ad5447b9aff5744b6608d234/Snip20210311_8.png](IOTICOS%20GL%20APP%203aecd292ad5447b9aff5744b6608d234/Snip20210311_8.png)
 
-Instalar la plataforma en Linux es muy simple. Ya que para tal fin desarrollamos un instalardor que encontrarás aquí:
+Instalar la plataforma en Linux es muy simple. Ya que para tal fin desarrollamos un instalador que encontrarás aquí:
 
 https://github.com/ioticos/ioticos_god_level_services/blob/master/install_ioticosgl.sh
 
