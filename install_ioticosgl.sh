@@ -5,6 +5,13 @@
 ## Gabriela Q.  Pablo S. y Benjamín S. - IoTicos.org
 ## ---------------------------------------------------
 
+## --------------------------------------------------
+## ReymondRojasNúñez - IoTCostaRica -ISCORP2021
+## Creditos: ioticos.org
+## ---------------------------------------------------
+
+## GRACIAS REYMOND!!!
+
 rand-str()
 {
     # Return random alpha-numeric string of given LENGTH
@@ -28,7 +35,7 @@ msg="
 /\/ /_| (_) / /  | | (_| (_) \__ \ / /_\\/ /___ 
 \____/ \___/\/   |_|\___\___/|___/ \____/\____/ 
 
-                                    ioticos.org                                                
+                                    ioticoscr                                                
 "
 
 
@@ -148,11 +155,11 @@ done
 random_str=$(rand-str 20)
 printf "\n\n🔐 Necesitamos crear el token que enviará los requests desde EMQX a nuestros Webhooks \n"
 
-while [[ -z "$WEBHOOK_TOKEN" ]]
+while [[ -z "$EMQX_API_TOKEN" ]]
 do
-  read -p "   EMQX API WEBHOOK TOKEN $(tput setaf 128) (${random_str})$(tput setaf 7): "  WEBHOOK_TOKEN
-  WEBHOOK_TOKEN=${WEBHOOK_TOKEN:-${random_str}}
-  echo "      Selected EMQX API WEB TOKEN  ► ${WEBHOOK_TOKEN} ✅"
+  read -p "   EMQX API WEBHOOK TOKEN $(tput setaf 128) (${random_str})$(tput setaf 7): "  EMQX_API_TOKEN
+  EMQX_API_TOKEN=${EMQX_API_TOKEN:-${random_str}}
+  echo "      Selected EMQX API WEB TOKEN  ► ${EMQX_API_TOKEN} ✅"
 done
 
 
@@ -251,7 +258,7 @@ printf "   🟢 MONGO PORT: $(tput setaf 128)${MONGO_PORT}$(tput setaf 7)\n"
 printf "   🟢 EMQX API PASSWORD: $(tput setaf 128)${EMQX_DEFAULT_APPLICATION_SECRET}$(tput setaf 7)\n"
 printf "   🟢 MQTT SUPERUSER: $(tput setaf 128)${EMQX_NODE_SUPERUSER_USER}$(tput setaf 7)\n"
 printf "   🟢 MQTT SUPER PASS: $(tput setaf 128)${EMQX_NODE_SUPERUSER_PASSWORD}$(tput setaf 7)\n"
-printf "   🟢 WEBHOOK WEB TOKEN: $(tput setaf 128)${WEBHOOK_TOKEN}$(tput setaf 7)\n"
+printf "   🟢 WEBHOOK WEB TOKEN: $(tput setaf 128)${EMQX_API_TOKEN}$(tput setaf 7)\n"
 printf "   🟢 DOMAIN: $(tput setaf 128)${DOMAIN}$(tput setaf 7)\n"
 printf "   🟢 IP: $(tput setaf 128)${IP}$(tput setaf 7)\n"
 printf "   🟢 SSL?: $(tput setaf 128)${opt}$(tput setaf 7)\n"
@@ -269,11 +276,11 @@ sudo ./install_docker.sh
 sudo rm install_docker.sh
 sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-sudo git clone https://github.com/ioticos/ioticos_god_level_services.git
-sudo mv ioticos_god_level_services ioticos
+sudo git clone https://github.com/rrojasn17/iotcr_services.git
+sudo mv iotcr_services iotcrv2
 
 
-cd ioticos
+cd iotcrv2
 
 ## ______________________________
 ## INSALL INIT
@@ -296,8 +303,8 @@ sudo sh -c " echo 'EMQX_DEFAULT_USER_PASSWORD=${EMQX_DEFAULT_USER_PASSWORD}' >> 
 sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}' >> $filename"
 
 
-sudo git clone https://github.com/ioticos/ioticos_god_level_app.git
-sudo mv ioticos_god_level_app  app
+sudo git clone https://github.com/rrojasn17/iotcr_app.git
+sudo mv iotcr_app  app
 
 cd app
 
@@ -327,7 +334,7 @@ sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SE
 sudo sh -c " echo 'EMQX_NODE_SUPERUSER_USER=${EMQX_NODE_SUPERUSER_USER}' >> $filename"
 sudo sh -c " echo 'EMQX_NODE_SUPERUSER_PASSWORD=${EMQX_NODE_SUPERUSER_PASSWORD}' >> $filename"
 sudo sh -c " echo 'EMQX_API_HOST=${IP}' >> $filename"
-sudo sh -c " echo 'WEBHOOK_TOKEN=${WEBHOOK_TOKEN}' >> $filename"
+sudo sh -c " echo 'EMQX_API_TOKEN=${EMQX_API_TOKEN}' >> $filename"
 sudo sh -c "echo 'EMQX_RESOURCES_DELAY=30000' >> $filename"
 sudo sh -c "echo '' >> $filename"
 
@@ -349,7 +356,6 @@ cd ..
 sudo docker-compose -f docker_node_install.yml up
 sudo docker-compose -f docker_nuxt_build.yml up
 sudo docker-compose -f docker_compose_production.yml up -d
-
 
 
 
