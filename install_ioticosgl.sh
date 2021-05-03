@@ -303,7 +303,7 @@ sudo sh -c " echo 'EMQX_DEFAULT_USER_PASSWORD=${EMQX_DEFAULT_USER_PASSWORD}' >> 
 sudo sh -c " echo 'EMQX_DEFAULT_APPLICATION_SECRET=${EMQX_DEFAULT_APPLICATION_SECRET}' >> $filename"
 
 
-sudo git clone https://github.com/rrojasn17/iotcr_app.git
+sudo git clone https://github.com/ioticos/ioticos_god_level_app.git
 sudo mv iotcr_app  app
 
 cd app
