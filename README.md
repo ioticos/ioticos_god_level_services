@@ -75,3 +75,8 @@ Este último es el que lanza a producción nuestra plataforma. Y es el único qu
 En los 2 casos anteriores, se recomienda hacerlo sin el -d para observar la salida. 
 
 En los 2 casos anteriores, (install y build), una vez que se ejecutan y terminan su tarea, los mismos finalizan con un exit. (no quedan corriendo) Lo que es normal.
+
+
+IMPORTANTE:
+
+El  motivo por el cual separamos install - build - production en tres contenedores, (siendo que se podría hacer todo junto) es para evitar saturar procesador y memoria servidores pequeños.
