@@ -1,4 +1,4 @@
-# IOTICOS GL SERVICES
+# IOTICOS GL (Plataforma IoT Nivel DIOS)
 
 Este repositorio contiene los servicios a montar (via docker) para montar la plataforma IoTicos GL.
 
@@ -12,6 +12,11 @@ El mismo fue desarrollado en el curso IoT Bootcamp God Level.
 
 ### Puedes acceder a la demo aquí:
 
+
+
+
+# Instalación:
+
 [](https://demo.ioticos.org)
 
 ![IOTICOS%20GL%20APP%203aecd292ad5447b9aff5744b6608d234/Snip20210311_8.png](IOTICOS%20GL%20APP%203aecd292ad5447b9aff5744b6608d234/Snip20210311_8.png)
@@ -22,8 +27,6 @@ https://github.com/ioticos/ioticos_god_level_services/blob/master/install_iotico
 
 ![IOTICOS%20GL%20APP%203aecd292ad5447b9aff5744b6608d234/ScreenFlow.gif](IOTICOS%20GL%20APP%203aecd292ad5447b9aff5744b6608d234/ScreenFlow.gif)
 
-
-# Instalación:
 
 Copia el contenido del archivo install_ioticosgl.sh
 En el servidor linux (Ubuntu LTS recomendado) crearemos un archivo llamado install.sh con el comando:
